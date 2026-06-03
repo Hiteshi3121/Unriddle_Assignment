@@ -1,0 +1,172 @@
+{
+  "mixed_patient_data_warning": "Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs",
+  "patients": [
+    {
+      "patient_number": 1,
+      "patient_demographics": {
+        "name": "[MISSING — requires clinician review]",
+        "age": "[MISSING — requires clinician review]",
+        "gender": "[MISSING — requires clinician review]",
+        "patient_id": "[MISSING — requires clinician review]",
+        "weight": "71kg"
+      },
+      "admission_date": "[MISSING — requires clinician review]",
+      "discharge_date": "[MISSING — requires clinician review]",
+      "principal_diagnosis": "Acute gastroenteritis with dehydration",
+      "secondary_diagnoses": [
+        "Urinary Tract Infection"
+      ],
+      "allergies": "[MISSING — requires clinician review]",
+      "hospital_course": "Patient presented with complaints of fever, vomiting, and generalized weakness. IV fluids, antibiotics, and other supportive measures were given.",
+      "procedures": [
+        "IV cannulation",
+        "NG tube insertion",
+        "Foley's catheterization"
+      ],
+      "investigations": {
+        "labs": [
+          "CBC",
+          "Serum creatinine",
+          "Urine routine",
+          "Blood glucose"
+        ],
+        "imaging": [
+          "USG abdomen and pelvis",
+          "CT KUB"
+        ],
+        "other": [
+          "ECG",
+          "ECHO"
+        ]
+      },
+      "discharge_condition": "Hemodynamically stable",
+      "discharge_medications": [
+        {
+          "medication_name": "RACIPER",
+          "dose": "40MG",
+          "frequency": "1-0-0",
+          "duration": "7 DAYS (BEFORE FOOD)"
+        },
+        {
+          "medication_name": "EMESET",
+          "dose": "4MG",
+          "frequency": "1-1-1",
+          "duration": "3 DAYS"
+        },
+        {
+          "medication_name": "OFLOX TZ",
+          "dose": "[MISSING — requires clinician review]",
+          "frequency": "1-0-1",
+          "duration": "5 DAYS"
+        },
+        {
+          "medication_name": "M STRONG",
+          "dose": "[MISSING — requires clinician review]",
+          "frequency": "1-0-0",
+          "duration": "15 DAYS"
+        },
+        {
+          "medication_name": "ZEDOTT",
+          "dose": "[MISSING — requires clinician review]",
+          "frequency": "1-1-1",
+          "duration": "3 DAYS"
+        },
+        {
+          "medication_name": "ENTRO",
+          "dose": "[MISSING — requires clinician review]",
+          "frequency": "1-0-1",
+          "duration": "3 DAYS"
+        },
+        {
+          "medication_name": "MEFTAL SPAS",
+          "dose": "1 TAB SOS",
+          "frequency": "4 TABLETS",
+          "duration": "[MISSING — requires clinician review]"
+        },
+        {
+          "medication_name": "LOPIRAMIDE",
+          "dose": "2MG",
+          "frequency": "1-0-1",
+          "duration": "5 DAYS"
+        }
+      ],
+      "follow_up_instructions": "Review immediately in case of fever, loose stools, vomiting, fatigue. Review on 09.03.2026. CBC",
+      "pending_results": [
+        "Urine culture and sensitivity"
+      ],
+      "escalation_flags": [
+        "[PENDING] Urine culture and sensitivity",
+        "[CONFLICTING] DKA diagnosis on page 3 conflicts with gastroenteritis diagnosis on page 1"
+      ]
+    },
+    {
+      "patient_number": 2,
+      "patientodemographics": {
+        "name": "[MISSING — requires clinician review]",
+        "age": "[MISSING — requires clinician review]",
+        "gender": "[MISSING — requires clinician review]",
+        "patient_id": "[MISSING — requires clinician review]",
+        "weight": "[MISSING — requires clinician review]"
+      },
+      "admission_date": "[MISSING — requires clinician review]",
+      "discharge_date": "[MISSING — requires clinician review]",
+      "principal_diagnosis": "Diabetes mellitus type 2, Acute kidney injury, Bilateral pyelonephritis",
+      "secondary_diagnoses": [
+        "Cholelithiasis"
+      ],
+      "allergies": "Not known",
+      "hospital_course": "Chief complaints: fever, generalized weakness, and myalgia. Patient was treated with IV fluids, IV antibiotics, and other supportive measures.",
+      "procedures": [
+        "IV cannulation",
+        "NG tube insertion",
+        "Foley's catheterization",
+        "CT KUB"
+      ],
+      "investigations": {
+        "labs": [
+          "CBC",
+          "Sr Creatinine",
+          "Urine routine",
+          "Blood glucose"
+        ],
+        "imaging": [
+          "USG abdomen and pelvis",
+          "CT KUB"
+        ],
+        "other": [
+          "ECG"
+        ]
+      },
+      "discharge_condition": "[MISSING — requires clinician review]",
+      "discharge_medications": [
+        {
+          "medication_name": "MEROMAC",
+          "dose": "1gm",
+          "frequency": "1-1-1",
+          "duration": "[MISSING — requires clinician review]"
+        },
+        {
+          "medication_name": "PAN",
+          "dose": "40mg",
+          "frequency": "1-0-0",
+          "duration": "[MISSING — requires clinician review]"
+        },
+        {
+          "medication_name": "EMESET",
+          "dose": "4mg",
+          "frequency": "1-1-1",
+          "duration": "[MISSING — requires clinician review]"
+        }
+      ],
+      "follow_up_instructions": "[MISSING — requires clinician review]",
+      "pending_results": [],
+      "escalation_flags": []
+    }
+  ],
+  "is_draft": true,
+  "review_required": true,
+  "escalation_flags": [
+    "[REVIEW REQUIRED] mixed_patient_data: Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs"
+  ],
+  "generated_at": "2026-06-03T23:56:20.064817"
+}

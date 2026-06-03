@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discharge Summary Report</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #222; font-size: 14px; }
+
+        .draft-banner {
+            background: #d32f2f; color: white; text-align: center;
+            padding: 10px; font-weight: bold; font-size: 15px; letter-spacing: 1px;
+        }
+
+        .header {
+            background: #1a237e; color: white; padding: 20px 30px;
+        }
+        .header h1 { font-size: 22px; margin-bottom: 4px; }
+        .header .meta { font-size: 12px; opacity: 0.8; }
+
+        .mixed-warning {
+            background: #fff3cd; border-left: 4px solid #ffc107;
+            margin: 16px 30px; padding: 12px 16px; border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .global-flags {
+            margin: 16px 30px; background: #fff;
+            border-radius: 8px; border: 1px solid #e0e0e0;
+            padding: 16px;
+        }
+        .global-flags h3 { color: #c62828; margin-bottom: 10px; font-size: 14px; }
+
+        .container { padding: 0 30px 30px; }
+
+        .patient-card {
+            background: white; border-radius: 10px; margin-bottom: 24px;
+            border: 1px solid #e0e0e0; overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .patient-header {
+            background: #283593; color: white; padding: 12px 20px;
+            font-size: 16px; font-weight: bold;
+        }
+
+        .section { padding: 16px 20px; }
+        .full-width { border-top: 1px solid #f0f0f0; }
+        .section-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0; border-top: 1px solid #f0f0f0;
+        }
+        .section-grid .section { border-right: 1px solid #f0f0f0; }
+        .section-grid .section:last-child { border-right: none; }
+
+        .section-title {
+            font-weight: 600; color: #1a237e; font-size: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 10px; padding-bottom: 6px;
+            border-bottom: 2px solid #e8eaf6;
+        }
+        .flags-title { border-bottom-color: #ffcdd2; color: #c62828; }
+        .sub-title { font-weight: 600; color: #555; font-size: 12px; margin-bottom: 6px; }
+        .subtitle { font-weight: normal; color: #666; text-transform: none; letter-spacing: 0; }
+
+        table.inner { width: 100%; border-collapse: collapse; }
+        table.inner td { padding: 4px 8px 4px 0; vertical-align: top; }
+        table.inner td.key { color: #666; font-size: 12px; width: 38%; white-space: nowrap; }
+
+        table.med-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+        }
+        table.med-table th {
+            background: #e8eaf6; color: #1a237e; padding: 8px 10px;
+            text-align: left; font-size: 12px;
+        }
+        table.med-table td { padding: 7px 10px; border-bottom: 1px solid #f5f5f5; }
+        table.med-table tr:hover td { background: #fafafa; }
+        .new-med { color: #2e7d32; font-weight: 500; }
+        .stopped-med { color: #c62828; text-decoration: line-through; }
+        .changed-med { color: #e65100; font-weight: 500; }
+
+        ul { padding-left: 18px; }
+        ul li { padding: 2px 0; }
+
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 12px;
+            font-size: 12px; font-weight: 500;
+        }
+        .badge.missing { background: #ffebee; color: #c62828; }
+        .badge.pending { background: #fff8e1; color: #e65100; }
+        .badge.conflict { background: #fff3e0; color: #bf360c; }
+        .badge.flag { background: #fce4ec; color: #880e4f; }
+
+        .flag-item {
+            background: #fff8e1; border-left: 3px solid #ffc107;
+            padding: 8px 12px; margin-bottom: 6px; border-radius: 0 4px 4px 0;
+            font-size: 13px;
+        }
+
+        .ok-text { color: #2e7d32; font-style: italic; }
+        .missing-text { color: #c62828; font-style: italic; }
+        .empty { color: #bbb; }
+
+        .narrative {
+            line-height: 1.7; color: #333; font-size: 13px;
+            background: #fafafa; padding: 12px; border-radius: 4px;
+            border-left: 3px solid #3f51b5;
+        }
+
+        .footer {
+            text-align: center; padding: 20px; color: #999; font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="draft-banner">
+    ⚠ DRAFT — FOR CLINICIAN REVIEW ONLY — NOT A FINALIZED CLINICAL DOCUMENT ⚠
+</div>
+
+<div class="header">
+    <h1>Discharge Summary Report</h1>
+    <div class="meta">Generated: 03 Jun 2026, 11:56 PM &nbsp;|&nbsp; Agent model: llama-3.3-70b-versatile &nbsp;|&nbsp; is_draft: true &nbsp;|&nbsp; review_required: true</div>
+</div>
+
+<div class="mixed-warning">⚠ Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs</div>
+
+<div class="global-flags">
+    <h3>Global Escalation Flags</h3>
+    <div class="flag-item"><span class="badge flag">[REVIEW REQUIRED] mixed_patient_data: Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs</span></div>
+</div>
+
+<div class="container">
+    
+    <div class="patient-card">
+        <div class="patient-header">Patient 1</div>
+
+        <div class="section-grid">
+
+            <div class="section">
+                <div class="section-title">Demographics</div>
+                <table class="inner"><tr><td class='key'>Name</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr><tr><td class='key'>Age</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr><tr><td class='key'>Gender</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr><tr><td class='key'>Patient Id</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr><tr><td class='key'>Weight</td><td>71kg</td></tr></table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Dates</div>
+                <table class="inner">
+                    <tr><td class="key">Admission</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                    <tr><td class="key">Discharge</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                    <tr><td class="key">Discharge Condition</td><td>Hemodynamically stable</td></tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Diagnosis</div>
+                <table class="inner">
+                    <tr><td class="key">Principal</td><td>Acute gastroenteritis with dehydration</td></tr>
+                    <tr><td class="key">Secondary</td><td><ul><li>Urinary Tract Infection</li></ul></td></tr>
+                    <tr><td class="key">Allergies</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Hospital Course</div>
+            <p class="narrative">Patient presented with complaints of fever, vomiting, and generalized weakness. IV fluids, antibiotics, and other supportive measures were given.</p>
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Discharge Medications <span class="subtitle">(changes from admission noted)</span></div>
+            <table class="med-table">
+        <thead>
+            <tr>
+                <th>Medication</th>
+                <th>Dose</th>
+                <th>Frequency</th>
+                <th>Duration</th>
+                <th>Change from Admission</th>
+            </tr>
+        </thead>
+        <tbody><tr>
+            <td><strong>—</strong></td>
+            <td>40MG</td>
+            <td>1-0-0</td>
+            <td>7 DAYS (BEFORE FOOD)</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td>4MG</td>
+            <td>1-1-1</td>
+            <td>3 DAYS</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td>1-0-1</td>
+            <td>5 DAYS</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td>1-0-0</td>
+            <td>15 DAYS</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td>1-1-1</td>
+            <td>3 DAYS</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td>1-0-1</td>
+            <td>3 DAYS</td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td>1 TAB SOS</td>
+            <td>4 TABLETS</td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td>2MG</td>
+            <td>1-0-1</td>
+            <td>5 DAYS</td>
+            <td class="">unknown</td>
+        </tr></tbody>
+    </table>
+        </div>
+
+        <div class="section-grid">
+
+            <div class="section">
+                <div class="section-title">Procedures</div>
+                <ul><li>IV cannulation</li><li>NG tube insertion</li><li>Foley's catheterization</li></ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Pending Results</div>
+                <ul><li>Urine culture and sensitivity</li></ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Follow-up Instructions</div>
+                <p>Review immediately in case of fever, loose stools, vomiting, fatigue. Review on 09.03.2026. CBC</p>
+            </div>
+
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Investigations</div>
+            <div class="section-grid">
+                <div>
+                    <div class="sub-title">Labs</div>
+                    <ul><li>CBC</li><li>Serum creatinine</li><li>Urine routine</li><li>Blood glucose</li></ul>
+                </div>
+                <div>
+                    <div class="sub-title">Imaging</div>
+                    <ul><li>USG abdomen and pelvis</li><li>CT KUB</li></ul>
+                </div>
+                <div>
+                    <div class="sub-title">Other</div>
+                    <ul><li>ECG</li><li>ECHO</li></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title flags-title">Escalation Flags for This Patient</div>
+            <div class="flag-item"><span class="badge pending">[PENDING] Urine culture and sensitivity</span></div><div class="flag-item"><span class="badge conflict">[CONFLICTING] DKA diagnosis on page 3 conflicts with gastroenteritis diagnosis on page 1</span></div>
+        </div>
+
+    </div>
+    
+    <div class="patient-card">
+        <div class="patient-header">Patient 2</div>
+
+        <div class="section-grid">
+
+            <div class="section">
+                <div class="section-title">Demographics</div>
+                <table class="inner"></table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Dates</div>
+                <table class="inner">
+                    <tr><td class="key">Admission</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                    <tr><td class="key">Discharge</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                    <tr><td class="key">Discharge Condition</td><td><span class="badge missing">[MISSING — requires clinician review]</span></td></tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Diagnosis</div>
+                <table class="inner">
+                    <tr><td class="key">Principal</td><td>Diabetes mellitus type 2, Acute kidney injury, Bilateral pyelonephritis</td></tr>
+                    <tr><td class="key">Secondary</td><td><ul><li>Cholelithiasis</li></ul></td></tr>
+                    <tr><td class="key">Allergies</td><td>Not known</td></tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Hospital Course</div>
+            <p class="narrative">Chief complaints: fever, generalized weakness, and myalgia. Patient was treated with IV fluids, IV antibiotics, and other supportive measures.</p>
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Discharge Medications <span class="subtitle">(changes from admission noted)</span></div>
+            <table class="med-table">
+        <thead>
+            <tr>
+                <th>Medication</th>
+                <th>Dose</th>
+                <th>Frequency</th>
+                <th>Duration</th>
+                <th>Change from Admission</th>
+            </tr>
+        </thead>
+        <tbody><tr>
+            <td><strong>—</strong></td>
+            <td>1gm</td>
+            <td>1-1-1</td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td>40mg</td>
+            <td>1-0-0</td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td class="">unknown</td>
+        </tr><tr>
+            <td><strong>—</strong></td>
+            <td>4mg</td>
+            <td>1-1-1</td>
+            <td><span class="badge missing">[MISSING — requires clinician review]</span></td>
+            <td class="">unknown</td>
+        </tr></tbody>
+    </table>
+        </div>
+
+        <div class="section-grid">
+
+            <div class="section">
+                <div class="section-title">Procedures</div>
+                <ul><li>IV cannulation</li><li>NG tube insertion</li><li>Foley's catheterization</li><li>CT KUB</li></ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Pending Results</div>
+                <span class="empty">—</span>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Follow-up Instructions</div>
+                <p><span class="badge missing">[MISSING — requires clinician review]</span></p>
+            </div>
+
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title">Investigations</div>
+            <div class="section-grid">
+                <div>
+                    <div class="sub-title">Labs</div>
+                    <ul><li>CBC</li><li>Sr Creatinine</li><li>Urine routine</li><li>Blood glucose</li></ul>
+                </div>
+                <div>
+                    <div class="sub-title">Imaging</div>
+                    <ul><li>USG abdomen and pelvis</li><li>CT KUB</li></ul>
+                </div>
+                <div>
+                    <div class="sub-title">Other</div>
+                    <ul><li>ECG</li></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section full-width">
+            <div class="section-title flags-title">Escalation Flags for This Patient</div>
+            <p class="ok-text">✓ No flags raised</p>
+        </div>
+
+    </div>
+    
+</div>
+
+<div class="footer">
+    Generated by Discharge Summary Agent &nbsp;|&nbsp; Dscribe / Unriddle Technologies Assignment &nbsp;|&nbsp; Always requires clinician verification before use
+</div>
+
+</body>
+</html>
