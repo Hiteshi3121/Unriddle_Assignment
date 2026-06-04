@@ -79,9 +79,9 @@
         },
         {
           "medication_name": "MEFTAL SPAS",
-          "dose": "1 TAB SOS",
-          "frequency": "4 TABLETS",
-          "duration": "[MISSING — requires clinician review]"
+          "dose": "[MISSING — requires clinician review]",
+          "frequency": "1 TAB SOS",
+          "duration": "4 TABLETS"
         },
         {
           "medication_name": "LOPIRAMIDE",
@@ -160,7 +160,10 @@
       ],
       "follow_up_instructions": "[MISSING — requires clinician review]",
       "pending_results": [],
-      "escalation_flags": []
+      "escalation_flags": [
+        "[CONFLICTING] mixed patient data",
+        "[MISSING] discharge prescription for some medications"
+      ]
     }
   ],
   "is_draft": true,
