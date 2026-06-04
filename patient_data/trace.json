@@ -26,8 +26,8 @@
     "result": {
       "success": true,
       "pages": 71,
-      "chars": 89392,
-      "message": "Full text extracted from patient.pdf (71 pages, 89,392 chars). Analyze the complete text now."
+      "chars": 73812,
+      "message": "Full text extracted from patient.pdf (71 pages, 73,812 chars). Analyze the complete text now."
     },
     "next_decision": "(continuing)"
   },
@@ -39,7 +39,7 @@
       "medications": [
         "RACIPER",
         "EMESET",
-        "OFLOX TZ",
+        "OFLX TZ",
         "M STRONG",
         "ZEDOTT",
         "ENTRO",
@@ -56,26 +56,41 @@
     "next_decision": "(continuing)"
   },
   {
-    "step": 4,
+    "step": 3,
     "reasoning": "(no text)",
     "action": "flag_for_review",
     "input": {
       "field_name": "mixed_patient_data",
-      "reason": "Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs"
+      "reason": "Mixed patient records were detected due to inconsistencies in patient demographics and diagnoses."
     },
     "result": {
       "success": true,
-      "flag": "[REVIEW REQUIRED] mixed_patient_data: Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs",
+      "flag": "[REVIEW REQUIRED] mixed_patient_data: Mixed patient records were detected due to inconsistencies in patient demographics and diagnoses.",
       "message": "Flagged 'mixed_patient_data' for clinician review."
     },
     "next_decision": "(continuing)"
   },
   {
-    "step": 5,
+    "step": 3,
+    "reasoning": "(no text)",
+    "action": "flag_for_review",
+    "input": {
+      "field_name": "discharge_medications",
+      "reason": "The list of discharge medications includes multiple medications, but it may not be comprehensive or up-to-date."
+    },
+    "result": {
+      "success": true,
+      "flag": "[REVIEW REQUIRED] discharge_medications: The list of discharge medications includes multiple medications, but it may not be comprehensive or up-to-date.",
+      "message": "Flagged 'discharge_medications' for clinician review."
+    },
+    "next_decision": "(continuing)"
+  },
+  {
+    "step": 4,
     "reasoning": "Produced final summary.",
     "action": "generate_summary",
     "input": {},
-    "result": "{\"mixed_patient_data_warning\": \"Mixed patient data detected: two different diagnoses, URINARY TRACT INFECTION and DKA, and different MRNs\", \"patients\": [\n{\n\"patient_number\": 1,\n\"patient_demographics\": {\n\"name\": \"[MISSING — requires clinician review]\",\n\"age\": \"[MISSING — requires clinician review]\",\n\"gender\": \"[MISSING — requires clinician review]\",\n\"patient_id\": \"[MISSING — requires clinician review]\",\n\"weight\": \"71kg\"\n},\n\"admission_date\": \"[MISSING — requires clinician review]\",\n\"discharge_date...",
+    "result": "{\"mixed_patient_data_warning\": \"Mixed patient records were detected due to inconsistencies in patient demographics and diagnoses.\", \"patients\": [{\"patient_number\": 1, \"patient_demographics\": {\"name\": \"MISSING — requires clinician review\", \"age\": \"MISSING — requires clinician review\", \"gender\": \"MISSING — requires clinician review\", \"patient_id\": \"MISSING — requires clinician review\", \"weight\": \"71kg\"}, \"admission_date\": \"MISSING — requires clinician review\", \"discharge_date\": \"MISSING — requires...",
     "next_decision": "Done."
   }
 ]
